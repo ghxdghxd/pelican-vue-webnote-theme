@@ -1,0 +1,6 @@
+{
+    "title": "{{ article.title }}"
+    "tags": ["{{ article.tags|join('", "') }}"],
+    "category": "{{category}}",
+    "date": "{{ article.date|strftime('%b %d, %Y') }}"
+}

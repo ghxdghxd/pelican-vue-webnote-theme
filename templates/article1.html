@@ -1,0 +1,22 @@
+<div class="note-content-header">
+    <div class="note-content-title">
+        <h1>{{ article.title }}</h1>
+        <div class="note-content-subtitle">
+            <i class="fa fa-calendar-alt fa-fw"></i>
+            {{ article.date|strftime('%b %d, %Y') }}
+            {% if category %}
+            <hr class="mx-3 v-divider v-divider--inset v-divider--vertical theme--light">
+            <a href="/{{ category.url }}">{{ category }}</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="note-content-controls tags">
+        {% for tag in article.tags %}
+        <a href="/{{ tag.url }}" class="tag"> {{ tag }}</a>
+        {% endfor %}
+    </div>
+</div>
+<hr class="v-divider theme--light">
+<div class="note-content-body">
+{{ article.content }}
+</div>

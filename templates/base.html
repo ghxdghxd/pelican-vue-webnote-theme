@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="description" content="A layout example that shows off a responsive note layout.">
+    <title>{{SITENAME}}</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <link href="/{{ THEME_STATIC_DIR }}/css/vue.css" rel="stylesheet">
+    <link href="/{{ THEME_STATIC_DIR }}/css/note.css" rel="stylesheet">
+    <link href="/{{ THEME_STATIC_DIR }}/css/pygment.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous"> -->
+</head>
+<body>
+<div id="app">
+    <v-app id="inspire">
+        <v-navigation-drawer
+          v-model="drawer"
+          fixed
+          width='200'
+          app >
+          <div class="demo-avatar">
+              <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" />
+          </div>
+          <v-list>
+            <v-list-tile>
+              <v-list-tile-action>
+                <i class="fa fa-home"></i>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title>主页</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile>
+              <v-list-tile-action>
+                <i class="fa fa-user"></i>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title>用户</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile>
+              <v-list-tile-action>
+                <i class="fa fa-tags"></i>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title>标签</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list>
+        </v-navigation-drawer>
+        <v-navigation-drawer
+          class="hidden-sm-and-up"
+          right
+          v-model="drawerRight"
+          fixed
+          app >
+          <v-list dense>
+            <v-list-tile @click.stop="right = !right">
+              <v-list-tile-action>
+                  <v-icon>exit_to_app</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title>Open Temporary Drawer</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list>
+        </v-navigation-drawer>
+        <v-content :style="{'padding-right': '0'}">
+            <v-container fluid pa-0>
+                <v-layout align-space-around justify-start fill-height>
+                    <v-flex md3 sm12>
+                        <v-layout row>
+                          <v-flex id="item" align-left justify-space-between column fill-height>
+                            <v-card>
+                              <v-toolbar class="elevation-0" color="white" extended :style="{'text-align': 'center'}">
+                                <v-spacer></v-spacer>
+                                <div class="title font-weight-bold">Knowledge</div>
+                                <v-spacer></v-spacer>
+                                <div class="search" slot="extension">
+                                  <ais-input class="input-search" id="input-search" :search-store="searchStore" placeholder="好记性不如烂键盘..."></ais-input>
+                                </div>
+                              </v-toolbar>
+                              <v-divider></v-divider>
+                              <vm-scrollbar :viewStyle="{ height: '100vh'}">
+                                <ais-index :search-store="searchStore" index-name="webNotes_search">
+                                  <ais-results v-show="searchStore.query.length > 0">
+                                  <!-- <ais-results> -->
+                                    <template scope="{ result }">
+                                      <v-list two-line :style="{'padding': '8px'}">
+                                        <!-- <a :href="result.url"> -->
+                                          <!-- <a> -->
+                                          <v-list-tile @click="get('/'+result.url)">
+                                            <v-list-tile-content>
+                                              <v-list-tile-title><ais-highlight :result="result" attribute-name="title"/></v-list-tile-title>
+                                              <v-list-tile-sub-title class="text--primary">{[ result.modified| moment('YYYY-MM-DD HH:mm:ss') ]}</v-list-tile-sub-title>
+                                              <v-list-tile-sub-title><ais-highlight :result="result" attribute-name="summary"/></v-list-tile-sub-title>
+                                            </v-list-tile-content>
+                                          </v-list-tile>
+                                          <v-divider></v-divider>
+                                        <!-- </a> -->
+                                      </v-list>
+                                    </template>
+                                  </ais-results>
+                                  <div v-show="searchStore.query.length === 0">
+                                    {% block item %}
+                                    {% endblock item %}
+                                  </div>
+                                </ais-index>
+                              </vm-scrollbar>
+                            </v-card>
+                          </v-flex>
+                        </v-layout>
+                    </v-flex>
+                    <v-flex v-html="notecontent" class="hidden-sm-and-down">
+                    </v-flex>
+                </v-layout>
+            </v-container>
+        </v-content>
+        <v-footer class="hidden-sm-and-up" app>
+            <v-bottom-nav
+              :active.sync="bottomNav"
+              :color="color"
+              :value="true"
+              absolute
+              shift >
+              <v-btn dark>
+                <span>Video</span>
+                <i class="fa fa-video"></i>
+              </v-btn>
+
+              <v-btn dark>
+                <span>Music</span>
+                <i class="fa fa-music"></i>
+              </v-btn>
+
+              <v-btn dark>
+                <span>Book</span>
+                <i class="fa fa-book"></i>
+              </v-btn>
+
+              <v-btn dark>
+                <span>Image</span>
+                <i class="fa fa-image"></i>
+              </v-btn>
+            </v-bottom-nav>
+        </v-footer>
+    </v-app>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script src="https://unpkg.com/vue-multiple-scrollbar@1.0.4/lib/scrollbar.js"></script>
+<script src="https://unpkg.com/vue-instantsearch@1.7.0/dist/vue-instantsearch.js"></script>
+<script src="https://unpkg.com/vue-moment@4.0.0/dist/vue-moment.js"></script>
+<script src="https://unpkg.com/vue-resource@1.5.1/dist/vue-resource.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/v-runtime-template@1.5.2/dist/v-runtime-template.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script>
+
+Vue.use(vueMoment)
+const VmScrollbar=scrollbar.default
+Vue.component(VmScrollbar.name, VmScrollbar)
+Vue.use(VueResource);
+
+new Vue({
+    delimiters: ['{[', ']}'],
+    unsafeDelimiters: ['{[[', ']]}'],
+    data () {
+        return {
+          notecontent: null,
+          drawer: null,
+          drawerRight: null,
+          bottomNav: 3,
+          searchStore: VueInstantSearch.createFromAlgoliaCredentials('IPQCQ37UM5', '4dfa5ff793685cabbf9d22acf47a7f5b')
+        }
+    },
+    methods: {
+      get: function (url) {
+        axios.get(url).then((response) => {
+              this.notecontent = response.data;
+              // var z = document.createElement('div');
+              // z.innerHTML = response.data;
+              // document.getElementById("miancontent").appendChild(z)
+           }, (response) => {
+               alert('error!');
+           });
+      },
+    },
+    // router,
+    components: {
+    },
+    computed: {
+      color() {
+        switch (this.bottomNav) {
+          case 0:
+            return "blue-grey";
+          case 1:
+            return "teal";
+          case 2:
+            return "brown";
+          case 3:
+            return "indigo";
+        }
+      },
+    },
+}).$mount('#app')
+</script>
+
+</body>
+</html>

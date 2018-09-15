@@ -1,0 +1,60 @@
+<!-- <nav class="elevation-0 v-toolbar v-toolbar--extended v-toolbar--prominent theme--light white" 
+    style="margin-top: 0px; padding-right: 0px; padding-left: 0px; transform: translateY(0px);" 
+    data-booted="true"> -->
+<div class="v-toolbar__content" style="height: 64px;">
+    <button type="button" class="hidden-sm-and-up v-btn v-btn--icon theme--light">
+        <div class="v-btn__content">
+            <font-awesome-icon color="grey darken-2" icon="arrow-left" size="lg"></font-awesome-icon>
+        </div>
+    </button>
+    <div class="v-toolbar__title title font-weight-bold" style="padding: 5px 0;">
+        {{ article.title }}
+    </div>
+    <div class="spacer"></div>
+    {% for tag in article.tags %}
+    <span tabindex="0" class="v-chip v-chip--label theme--light pink white--text">
+        <span class="v-chip__content"><i class="fa fa-tag fa-fw"></i> {{ tag }}</span>
+    </span>
+    {% endfor %}
+</div>
+<div class="v-toolbar__extension" style="height: 64px;">
+    <div class="v-subheader theme--light">
+        {% if category %}
+        <span tabindex="0" class="v-chip theme--light primary white--text">
+            <span class="v-chip__content">
+                <div class="v-avatar" style="height: 48px; width: 48px;">
+                    <i class="fa fa-folder"></i>
+                </div>
+                {{ category }}
+            </span>
+        </span>
+        {% endif %}
+        <hr class="mx-3 v-divider v-divider--inset v-divider--vertical theme--light">
+        {{ article.date|strftime('%b %d, %Y') }}
+    </div>
+</div>
+<!-- </nav> -->
+
+<hr class="v-divider theme--light">
+<div class="vm-scrollbar" >
+    <div class="vm-scrollbar__wrap" style="margin-bottom: -10px; margin-right: -10px;">
+        <div class="vm-scrollbar__view" style="position: relative;">
+            <div class="v-card__text">
+                {{ article.content }}
+            </div>
+            <!-- <div class="resize-triggers">
+                <div class="expand-trigger">
+                    <div style="width: 1132px; height: 2724px;">
+                    </div>
+                </div>
+                <div class="contract-trigger"></div>
+            </div> -->
+        </div>
+    </div>
+    <!-- <div class="vm-scrollbar__bar horizontal">
+        <div class="vm-scrollbar__thumb" style="width: 0px; transform: translateX(0%);"></div>
+    </div>
+    <div class="vm-scrollbar__bar vertical">
+        <div class="vm-scrollbar__thumb" style="height: 18.2152%; transform: translateY(448.925%);"></div>
+    </div> -->
+</div>
