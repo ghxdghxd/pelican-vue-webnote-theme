@@ -2,21 +2,37 @@ html, body {
     overflow: hidden;
     height: 100vh;
 }
-/* #leftSideBar{
-  width: 8%!important;
-} */
+
 #item {
-  height: 100vh;
-  overflow: visible;
-  right: 60%;
-  width: calc(40% - 200px);
-  /* display: -webkit-box;*/
-  border-right: 1px solid transparent;
+  width: 400px;
 }
-/* #maincontent{
-  left: 40%;
-  width: 60%;
-} */
+#maincontent{
+  width: calc(100% - 601px) !important;
+  overflow: hidden;
+  max-height: calc(100% - 32px);
+}
+#itemlist{
+  margin-bottom: 100px;
+}
+#notetext{
+  margin-top: 96px;
+}
+@media print, screen and (max-width: 992px) {
+  #maincontent{
+    width: 100%!important;
+    overflow: auto;
+  }
+  #itemlist{
+    margin-bottom: 150px;
+  }
+  #notetext{
+    margin-bottom: 48px;
+  }
+}
+
+#bottombar{
+  z-index: 6;
+}
 .vm-scrollbar__wrap {
   height: 100vh;
 }
@@ -38,7 +54,7 @@ html, body {
   /* box-shadow: 0 1px 0 #bfbebf; */
   display: block;
   font: 400 1em/1.5em sans-serif;
-  padding: 1em 10%;
+  padding: 0.8em 10%;
   width: 100%;
   font-size: 15px;
 }

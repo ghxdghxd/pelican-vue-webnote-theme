@@ -14,8 +14,16 @@
 <body>
 <div id="app">
     <v-app id="inspire">
+      <v-navigation-drawer
+      id="maincontent"
+      clipped
+      right
+      v-model="drawerRight"
+      v-html="notecontent"
+      fixed
+      width="1000"
+      app></v-navigation-drawer>
         <v-navigation-drawer
-          id="leftSideBar"
           v-model="drawer"
           fixed
           width=200
@@ -51,64 +59,64 @@
           </v-list>
         </v-navigation-drawer>
         <v-content>
-            <v-container fluid fill-height pa-0>
+            <v-container fluid fill-height pa-0 ma-0>
                 <v-layout justify-start align-center>
-                    <!-- <v-flex md3 sm12>
-                        <v-layout row> -->
-                          <v-flex shrink>
-                            <v-card>
-                              <v-toolbar class="elevation-0" color="white" extended :style="{'text-align': 'center'}">
-                                <v-spacer></v-spacer>
-                                <div class="title font-weight-bold">Knowledge</div>
-                                <v-spacer></v-spacer>
-                                <div class="search" slot="extension">
-                                  <ais-input class="input-search" id="input-search" :search-store="searchStore" placeholder="好记性不如烂键盘..."></ais-input>
-                                </div>
-                              </v-toolbar>
-                              <v-divider></v-divider>
-                              <vm-scrollbar :viewStyle="{ height: '100vh'}">
-                                <ais-index :search-store="searchStore" index-name="webNotes_search">
-                                  <ais-results v-show="searchStore.query.length > 0">
-                                  <!-- <ais-results> -->
-                                    <template scope="{ result }">
-                                      <v-list two-line :style="{'padding': '8px'}">
-                                        <!-- <a :href="result.url"> -->
-                                          <!-- <a> -->
-                                          <v-list-tile @click="get('/'+result.url)" >
-                                            <v-list-tile-content>
-                                              <v-list-tile-title><ais-highlight :result="result" attribute-name="title"/></v-list-tile-title>
-                                              <v-list-tile-sub-title class="text--primary">{[ result.modified| moment('YYYY-MM-DD HH:mm:ss') ]}</v-list-tile-sub-title>
-                                              <v-list-tile-sub-title><ais-highlight :result="result" attribute-name="summary"/></v-list-tile-sub-title>
-                                            </v-list-tile-content>
-                                          </v-list-tile>
-                                          <v-divider></v-divider>
-                                        <!-- </a> -->
-                                      </v-list>
-                                    </template>
-                                  </ais-results>
-                                  <div v-show="searchStore.query.length === 0">
-                                    {% block item %}
-                                    {% endblock item %}
-                                  </div>
-                                </ais-index>
-                              </vm-scrollbar>
-                            </v-card>
-                          </v-flex>
-                        <!-- </v-layout>
-                    </v-flex> -->
-                    <!-- <v-flex id="miancontent" class="hidden-sm-and-down" style="background-color: white;">
-                    </v-flex> -->
+                  <v-flex shrink id="item">
+                    <v-card>
+                      <v-toolbar dense class="elevation-0" color="white" extended :style="{'text-align': 'center'}">
+                        <v-spacer></v-spacer>
+                        <div class="title font-weight-bold">Knowledge</div>
+                        <v-spacer></v-spacer>
+                        <div class="search" slot="extension">
+                          <ais-input class="input-search" id="input-search" :search-store="searchStore" placeholder="好记性不如烂键盘..."></ais-input>
+                        </div>
+                      </v-toolbar>
+                      <v-divider></v-divider>
+                      <vm-scrollbar :viewStyle="{ height: '100vh'}">
+                        <ais-index :search-store="searchStore" index-name="webNotes_search">
+                          <ais-results v-show="searchStore.query.length > 0">
+                          <!-- <ais-results> -->
+                            <template scope="{ result }">
+                              <v-list two-line :style="{'padding': '8px'}">
+                                <!-- <a :href="result.url"> -->
+                                  <!-- <a> -->
+                                  <v-list-tile @click.stop="get('/'+result.url)">
+                                    <v-list-tile-content>
+                                      <v-list-tile-title><ais-highlight :result="result" attribute-name="title"/></v-list-tile-title>
+                                      <v-list-tile-sub-title class="text--primary">{[ result.modified| moment('YYYY-MM-DD HH:mm:ss') ]}</v-list-tile-sub-title>
+                                      <v-list-tile-sub-title><ais-highlight :result="result" attribute-name="summary"/></v-list-tile-sub-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                  <v-divider></v-divider>
+                                <!-- </a> -->
+                              </v-list>
+                            </template>
+                          </ais-results>
+                          <v-list two-line :style="{'padding': '8px'}" 
+                            v-show="searchStore.query.length === 0" id="itemlist">
+                            {% block item %}
+                            {% endblock item %}
+                          </v-list>
+                        </ais-index>
+                      </vm-scrollbar>
+                    </v-card>
+                  </v-flex>
                 </v-layout>
             </v-container>
         </v-content>
-        <v-navigation-drawer
-          id="maincontent"
+        <v-btn
+          fab
+          color="pink"
+          dark
+          absolute
+          bottom
           right
-          v-model="right"
-          v-html="notecontent"
-          fixed
-        ></v-navigation-drawer>
-        <v-footer class="hidden-sm-and-up" app>
+          fab
+          @click="drawerRight = !drawerRight"
+        >
+          <v-icon>+</v-icon>
+        </v-btn>
+        <v-footer class="hidden-sm-and-up" app id="bottombar">
             <v-bottom-nav
               :active.sync="bottomNav"
               :color="color"
@@ -174,6 +182,9 @@ new Vue({
     methods: {
       get: function (url) {
         axios.get(url).then((response) => {
+            if(this.drawer != true){
+              this.drawerRight = !this.drawerRight
+            }
               this.notecontent = response.data;
               // var z = document.createElement('div');
               // z.innerHTML = response.data;
@@ -185,6 +196,11 @@ new Vue({
     },
     // router,
     components: {
+    },
+    beforeMount() {
+      if(window.innerWidth > 992){
+        this.get(url)
+      }
     },
     computed: {
       color() {

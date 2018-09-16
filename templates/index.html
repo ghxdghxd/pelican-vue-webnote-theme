@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% block item %}
-<v-list two-line :style="{'padding': '8px'}">
 {% for article in articles %}
     {% if loop.first %}
-        <v-list-tile @click="get('{{ article.url }}')">
+        <v-list-tile @click.stop="get('{{ article.url }}')">
+        <script>var url = "{{ article.url }}"</script>
     {% else %}
-        <v-list-tile @click="get('{{ article.url }}')">
+        <v-list-tile @click.stop="get('{{ article.url }}')">
     {% endif %}
       <v-list-tile-content>
         <v-list-tile-title>{{ article.title}}</v-list-tile-title>
@@ -16,5 +16,4 @@
     </v-list-tile>
     <v-divider></v-divider>
 {% endfor %}
-</v-list>
 {% endblock item %}
