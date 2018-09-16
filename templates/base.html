@@ -10,7 +10,6 @@
     <link href="/{{ THEME_STATIC_DIR }}/css/vue.css" rel="stylesheet">
     <link href="/{{ THEME_STATIC_DIR }}/css/note.css" rel="stylesheet">
     <link href="/{{ THEME_STATIC_DIR }}/css/pygment.css" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous"> -->
 </head>
 <body>
 <div id="app">
@@ -113,7 +112,7 @@
                           </v-flex>
                         </v-layout>
                     </v-flex>
-                    <v-flex v-html="notecontent" class="hidden-sm-and-down">
+                    <v-flex id="miancontent" v-html="notecontent" class="hidden-sm-and-down" style="background-color: white;">
                     </v-flex>
                 </v-layout>
             </v-container>
@@ -151,21 +150,22 @@
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.js"></script>
-<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<!-- <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script> -->
 <script src="https://unpkg.com/vue-multiple-scrollbar@1.0.4/lib/scrollbar.js"></script>
 <script src="https://unpkg.com/vue-instantsearch@1.7.0/dist/vue-instantsearch.js"></script>
 <script src="https://unpkg.com/vue-moment@4.0.0/dist/vue-moment.js"></script>
-<script src="https://unpkg.com/vue-resource@1.5.1/dist/vue-resource.min.js"></script>
+<!-- <script src="https://unpkg.com/vue-resource@1.5.1/dist/vue-resource.min.js"></script> -->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="https://unpkg.com/v-runtime-template@1.5.2/dist/v-runtime-template.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
+<!-- <script src="https://unpkg.com/v-runtime-template@1.5.2/dist/v-runtime-template.js"></script> -->
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" -->
+  <!-- crossorigin="anonymous"></script> -->
+
 <script>
 
 Vue.use(vueMoment)
 const VmScrollbar=scrollbar.default
 Vue.component(VmScrollbar.name, VmScrollbar)
-Vue.use(VueResource);
+// Vue.use(VueResource);
 
 new Vue({
     delimiters: ['{[', ']}'],
@@ -185,7 +185,7 @@ new Vue({
               this.notecontent = response.data;
               // var z = document.createElement('div');
               // z.innerHTML = response.data;
-              // document.getElementById("miancontent").appendChild(z)
+              // document.getElementById('maincontent').innerHTML = marked(this.notecontent);
            }, (response) => {
                alert('error!');
            });
