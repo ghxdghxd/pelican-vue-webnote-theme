@@ -2,12 +2,21 @@ html, body {
     overflow: hidden;
     height: 100vh;
 }
+/* #leftSideBar{
+  width: 8%!important;
+} */
 #item {
   height: 100vh;
   overflow: visible;
-  width: 400px;
+  right: 60%;
+  width: calc(40% - 200px);
+  /* display: -webkit-box;*/
   border-right: 1px solid transparent;
 }
+/* #maincontent{
+  left: 40%;
+  width: 60%;
+} */
 .vm-scrollbar__wrap {
   height: 100vh;
 }
@@ -40,3 +49,4 @@ html, body {
 .search .input-search:valid + label {
   text-indent: -9999px;
 }
+

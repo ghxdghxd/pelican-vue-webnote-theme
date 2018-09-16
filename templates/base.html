@@ -15,9 +15,10 @@
 <div id="app">
     <v-app id="inspire">
         <v-navigation-drawer
+          id="leftSideBar"
           v-model="drawer"
           fixed
-          width='200'
+          width=200
           app >
           <div class="demo-avatar">
               <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" />
@@ -49,29 +50,12 @@
             </v-list-tile>
           </v-list>
         </v-navigation-drawer>
-        <v-navigation-drawer
-          class="hidden-sm-and-up"
-          right
-          v-model="drawerRight"
-          fixed
-          app >
-          <v-list dense>
-            <v-list-tile @click.stop="right = !right">
-              <v-list-tile-action>
-                  <v-icon>exit_to_app</v-icon>
-              </v-list-tile-action>
-              <v-list-tile-content>
-                <v-list-tile-title>Open Temporary Drawer</v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
-          </v-list>
-        </v-navigation-drawer>
-        <v-content :style="{'padding-right': '0'}">
-            <v-container fluid pa-0>
-                <v-layout align-space-around justify-start fill-height>
-                    <v-flex md3 sm12>
-                        <v-layout row>
-                          <v-flex id="item" align-left justify-space-between column fill-height>
+        <v-content>
+            <v-container fluid fill-height pa-0>
+                <v-layout justify-start align-center>
+                    <!-- <v-flex md3 sm12>
+                        <v-layout row> -->
+                          <v-flex shrink>
                             <v-card>
                               <v-toolbar class="elevation-0" color="white" extended :style="{'text-align': 'center'}">
                                 <v-spacer></v-spacer>
@@ -90,7 +74,7 @@
                                       <v-list two-line :style="{'padding': '8px'}">
                                         <!-- <a :href="result.url"> -->
                                           <!-- <a> -->
-                                          <v-list-tile @click="get('/'+result.url)">
+                                          <v-list-tile @click="get('/'+result.url)" >
                                             <v-list-tile-content>
                                               <v-list-tile-title><ais-highlight :result="result" attribute-name="title"/></v-list-tile-title>
                                               <v-list-tile-sub-title class="text--primary">{[ result.modified| moment('YYYY-MM-DD HH:mm:ss') ]}</v-list-tile-sub-title>
@@ -110,13 +94,20 @@
                               </vm-scrollbar>
                             </v-card>
                           </v-flex>
-                        </v-layout>
-                    </v-flex>
-                    <v-flex id="miancontent" v-html="notecontent" class="hidden-sm-and-down" style="background-color: white;">
-                    </v-flex>
+                        <!-- </v-layout>
+                    </v-flex> -->
+                    <!-- <v-flex id="miancontent" class="hidden-sm-and-down" style="background-color: white;">
+                    </v-flex> -->
                 </v-layout>
             </v-container>
         </v-content>
+        <v-navigation-drawer
+          id="maincontent"
+          right
+          v-model="right"
+          v-html="notecontent"
+          fixed
+        ></v-navigation-drawer>
         <v-footer class="hidden-sm-and-up" app>
             <v-bottom-nav
               :active.sync="bottomNav"
@@ -175,6 +166,7 @@ new Vue({
           notecontent: null,
           drawer: null,
           drawerRight: null,
+          right: null,
           bottomNav: 3,
           searchStore: VueInstantSearch.createFromAlgoliaCredentials('IPQCQ37UM5', '4dfa5ff793685cabbf9d22acf47a7f5b')
         }
