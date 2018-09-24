@@ -7,6 +7,7 @@
     <title>{{SITENAME}}</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/iview/2.14.0/styles/iview.css">
     <link href="/{{ THEME_STATIC_DIR }}/css/vue.css" rel="stylesheet">
     <link href="/{{ THEME_STATIC_DIR }}/css/note.css" rel="stylesheet">
     <link href="/{{ THEME_STATIC_DIR }}/css/pygment.css" rel="stylesheet">
@@ -64,7 +65,7 @@
                 <v-layout justify-start align-center>
                   <v-flex shrink xs12 id="item">
                     <v-card>
-                      <v-toolbar dense class="elevation-0" color="white" extended :style="{'text-align': 'center'}">
+                      <v-toolbar dense class="elevation-0" :color="color1" extended :style="{'text-align': 'center'}">
                         <v-spacer></v-spacer>
                         <div class="title font-weight-bold">Knowledge</div>
                         <v-spacer></v-spacer>
@@ -150,6 +151,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.js"></script>
+<script type="text/javascript" src="https://cdn.bootcss.com/iview/2.14.0/iview.min.js"></script>
 <!-- <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script> -->
 <script src="https://unpkg.com/vue-multiple-scrollbar@1.0.4/lib/scrollbar.js"></script>
 <script src="https://unpkg.com/vue-instantsearch@1.7.0/dist/vue-instantsearch.js"></script>
@@ -176,7 +178,7 @@ new Vue({
           drawer: null,
           drawerRight: null,
           right: null,
-          bottomNav: 1,
+          bottomNav: 0,
           searchStore: VueInstantSearch.createFromAlgoliaCredentials('IPQCQ37UM5', '4dfa5ff793685cabbf9d22acf47a7f5b')
         }
     },
@@ -216,6 +218,13 @@ new Vue({
             return "indigo";
         }
       },
+      color1() {
+        if (window.innerWidth > 992) {
+          return "white";
+        }else{
+          return this.color;
+        }
+      }
     },
 }).$mount('#app')
 </script>

@@ -18,6 +18,9 @@ html, body {
   margin-top: 96px;
 }
 @media print, screen and (max-width: 992px) {
+  #item {
+    max-width: 100%;
+  }
   #maincontent{
     width: 100%!important;
     overflow: auto;

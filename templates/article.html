@@ -1,5 +1,5 @@
 <nav class="elevation-0 v-toolbar v-toolbar--dense v-toolbar--extended theme--light white" 
-    style="margin-top: 0px; padding-right: 0px; padding-left: 0px; transform: translateY(0px);position: fixed;z-index: 7;" 
+    style="margin-top: 0px; padding-right: 0px; padding-left: 0px; transform: translateY(0px);position: fixed;z-index: 7" 
     data-booted="true">
 <div class="v-toolbar__content" style="height: 48px;">
     <div class="v-toolbar__title title font-weight-bold" style="padding: 5px 0;">
@@ -7,27 +7,34 @@
     </div>
     <div class="spacer"></div>
 </div>
-<div class="v-toolbar__extension grid-list-sm" style="height: 48px;">
+<div style="display: flex;">
+<div class="v-toolbar__extension" style="height: 48px;padding: 0;width: 70%;">
     <div class="v-subheader theme--light">
         {% if category %}
         <span tabindex="0" class="v-chip theme--light primary white--text">
             <span class="v-chip__content">
-                <div class="v-avatar" style="height: 48px; width: 48px;">
+                <!-- <div class="v-avatar" style="height: 48px; width: 48px;">
                     <i class="fa fa-folder"></i>
-                </div>
+                </div> -->
                 {{ category }}
             </span>
         </span>
         {% endif %}
-        <hr class="mx-3 v-divider v-divider--inset v-divider--vertical theme--light">
+        <hr class="mx-1 v-divider v-divider--inset v-divider--vertical theme--light">
         {{ article.date|strftime('%b %d, %Y') }}
     </div>
-    <div class="spacer"></div>
-    {% for tag in article.tags %}
-    <span tabindex="0" class="v-chip v-chip--label theme--light pink white--text">
-        <span class="v-chip__content"><i class="fa fa-tag fa-fw"></i> {{ tag }}</span>
-    </span>
-    {% endfor %}
+    </div>
+    {% if article.tags %}
+    <div style="float: right;margin: auto;">
+        {% for tag in article.tags %}
+        <span class="v-chip v-chip--label v-chip--small theme--light pink white--text">
+            <span class="v-chip__content">
+                <i class="fa fa-tag fa-fw"></i>
+                {{tag}}
+        </span></span>
+        {% endfor %}
+    </div>
+    {% endif %}
 </div>
 <hr class="v-divider theme--light">
 </nav>
